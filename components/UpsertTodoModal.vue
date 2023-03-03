@@ -7,7 +7,16 @@
       :class="{
         'outline-none ring-2 ring-red-500': isInputEmpty,
       }"
+      autofocus
       @input="isInputEmpty = false"
+      @keydown.enter="
+        (e) => {
+          // ignore if shift + enter
+          if (e.shiftKey) return
+          e.preventDefault()
+          handleOk()
+        }
+      "
     />
     <div class="flex justify-end gap-4">
       <Button class="border-2 border-red-500" @click="handleCancel">
@@ -40,6 +49,13 @@ export default Vue.extend({
     return {
       isInputEmpty: false,
     }
+  },
+  mounted() {
+    const todoInputEl = this.$el.querySelector(
+      '#td-text'
+    ) as HTMLTextAreaElement
+    if (!todoInputEl) return
+    todoInputEl?.focus()
   },
   methods: {
     handleOk() {
