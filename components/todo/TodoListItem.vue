@@ -48,9 +48,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import moment from 'moment'
-import { Checkbox } from './'
 import { Todo } from '~/@types'
 import { TrashIcon, EditIcon, CalendarIcon } from '~/assets/icons/index'
+import { Checkbox } from '~/components/base'
 
 export default Vue.extend({
   name: 'TodoListItem',

@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { BaseModal } from './index'
+import { BaseModal } from './'
 
 interface IModalProps {
   labelOk: String

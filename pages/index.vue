@@ -8,8 +8,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import HomePage from '../components/HomePage.vue'
-import SiteHeader from '../components/SiteHeader.vue'
+import { HomePage, SiteHeader } from '../components'
 
 export default Vue.extend({
   name: 'IndexPage',

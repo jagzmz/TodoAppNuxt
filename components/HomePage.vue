@@ -48,14 +48,15 @@
 import Vue from 'vue'
 import moment from 'moment'
 import { IDelModalProps, IModalProps, Todo } from '../@types'
+
 import {
-  TodoList,
-  UpsertTodoModal,
-  AddTask,
   Backdrop,
-  ModalTransition,
   DeleteTodoModal,
-} from './'
+  ModalTransition,
+  UpsertTodoModal,
+} from './modals'
+import { TodoList } from './todo'
+import AddTask from './AddTask.vue'
 
 const getNthDate = (n: number) => {
   const today = moment()

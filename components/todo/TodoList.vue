@@ -19,8 +19,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Todo } from '../@types'
-import { TodoListItem } from './'
+import TodoListItem from './TodoListItem.vue'
+import { Todo } from '~/@types'
 
 export default Vue.extend({
   name: 'TodoList',
