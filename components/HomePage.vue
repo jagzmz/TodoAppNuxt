@@ -3,17 +3,38 @@
     class="mx-auto box-border flex max-w-4xl flex-col justify-center gap-5 p-5"
   >
     <AddTask class="mb-5" @on-click="handleAddTask" />
-    <TodoItemList title="Todo" :todos="uncompletedTasks" />
-    <TodoItemList title="Completed" :todos="completedTasks" />
+    <TodoList
+      title="Todo"
+      :todos="uncompletedTasks"
+      @on-action="handleAction"
+    />
+    <TodoList
+      title="Completed"
+      :todos="completedTasks"
+      @on-action="handleAction"
+    />
     <portal to="modal">
       <ModalTransition>
         <Backdrop v-if="isModalOpen" @escape="handleCancel">
-          <div class="container mx-auto box-border h-[17rem] w-[29rem] p-4">
+          <div
+            v-if="modalType === 'upsert'"
+            class="box-border h-[17rem] w-[29rem] p-4"
+          >
             <UpsertTodoModal
               class="rounded-2xl"
-              :label-ok="modalProps.labelOk"
-              :label-cancel="modalProps.labelCancel"
+              :modal-props="modalProps"
               @ok="handleOk"
+              @cancel="handleCancel"
+            />
+          </div>
+          <div
+            v-if="modalType === 'delete'"
+            class="box-border h-[10rem] w-[29rem] p-4"
+          >
+            <DeleteTodoModal
+              class="rounded-2xl"
+              :modal-props="modalProps"
+              @ok="handleDelete"
               @cancel="handleCancel"
             />
           </div>
@@ -26,12 +47,15 @@
 <script lang="ts">
 import Vue from 'vue'
 import moment from 'moment'
-import TodoItemList from './TodoList.vue'
-import UpsertTodoModal from './UpsertTodoModal.vue'
-import { Todo } from './TodoListItem.vue'
-import AddTask from './AddTask.vue'
-import Backdrop from './Backdrop.vue'
-import ModalTransition from './ModalTransition.vue'
+import { IDelModalProps, IModalProps, Todo } from '../@types'
+import {
+  TodoList,
+  UpsertTodoModal,
+  AddTask,
+  Backdrop,
+  ModalTransition,
+  DeleteTodoModal,
+} from './'
 
 const getNthDate = (n: number) => {
   const today = moment()
@@ -46,11 +70,12 @@ const sortByTime = (a: Todo, b: Todo) => {
 export default Vue.extend({
   name: 'HomePage',
   components: {
-    TodoItemList,
+    TodoList,
     AddTask,
     UpsertTodoModal,
     Backdrop,
     ModalTransition,
+    DeleteTodoModal,
   },
   props: {
     name: {
@@ -99,7 +124,9 @@ export default Vue.extend({
       modalProps: {
         labelOk: 'Add',
         labelCancel: 'Cancel',
-      },
+      } as IModalProps,
+      delModalProps: {} as IDelModalProps,
+      modalType: 'upsert',
     }
   },
   computed: {
@@ -112,15 +139,25 @@ export default Vue.extend({
   },
   methods: {
     handleAddTask() {
-      this.isModalOpen = true
+      this.modalType = 'upsert'
       this.modalProps = {
         labelOk: 'Add',
         labelCancel: 'Cancel',
       }
+      this.isModalOpen = true
     },
     handleOk(text: string) {
       this.isModalOpen = false
       if (!text) return
+      if (this.modalProps.labelOk === 'Save') {
+        const task = this.tasks.find(
+          (task) => task.title === this.modalProps.initialText
+        )
+        if (task) {
+          task.title = text
+          return
+        }
+      }
       this.tasks.push({
         id: this.tasks.length,
         title: text,
@@ -130,6 +167,28 @@ export default Vue.extend({
     },
     handleCancel() {
       this.isModalOpen = false
+    },
+    handleAction(todo: Todo, action: string) {
+      if (action === 'edit') {
+        this.isModalOpen = true
+        this.modalType = 'upsert'
+        this.modalProps = {
+          labelOk: 'Save',
+          labelCancel: 'Cancel',
+          initialText: todo.title,
+        }
+      } else if (action === 'delete') {
+        this.modalType = 'delete'
+        this.delModalProps.todo = todo
+        this.isModalOpen = true
+      }
+    },
+    handleDelete() {
+      this.handleCancel()
+      const todoToDelete = this.delModalProps.todo
+      if (!todoToDelete) return
+      this.delModalProps = {} as IDelModalProps
+      this.tasks = this.tasks.filter((task) => task.id !== todoToDelete.id)
     },
   },
 })

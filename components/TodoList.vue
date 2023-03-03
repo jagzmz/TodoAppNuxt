@@ -6,7 +6,11 @@
       </h1>
       <ul class="flex flex-col gap-4">
         <li v-for="todo in todos" :key="todo.id">
-          <TodoListItem :todo="todo" @on-checked="onChecked" />
+          <TodoListItem
+            :todo="todo"
+            @on-checked="onChecked"
+            @on-action="(id, action) => $emit('on-action', todo, action)"
+          />
         </li>
       </ul>
     </div>
@@ -15,8 +19,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-
-import TodoListItem, { Todo } from './TodoListItem.vue'
+import { Todo } from '../@types'
+import { TodoListItem } from './'
 
 export default Vue.extend({
   name: 'TodoList',

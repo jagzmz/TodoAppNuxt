@@ -1,13 +1,13 @@
 <template>
   <div
-    class="h-15 box-border w-full rounded-2xl bg-secondary py-2 pl-4 pr-10"
+    class="h-15 box-border w-full rounded-2xl bg-secondary py-2 pl-4 pr-4"
     :class="isPastDue ? 'border-2 border-red-500' : ''"
   >
     <div
       class="flex flex-row gap-4 text-tertiary"
       :class="todo.completed || isPastDue ? 'opacity-50' : ''"
     >
-      <CheckBox
+      <Checkbox
         :is-checked="todo.completed"
         :on-checked="onChecked"
         class="mt-1 flex-shrink-0"
@@ -25,9 +25,21 @@
           class="flex select-none items-center gap-2"
           :style="{ color: colorOfDay }"
         >
-          <CalendarIcon />
+          <CalendarIcon class="h-4 w-4" />
           {{ endAtText }}
         </div>
+      </div>
+      <div class="flex flex-grow items-center justify-end gap-4 p-1">
+        <EditIcon
+          class="cursor-pointer"
+          stroke="white"
+          @click="onAction('edit')"
+        />
+        <TrashIcon
+          class="cursor-pointer"
+          stroke="rgb(239 68 68 / 1)"
+          @click="onAction('delete')"
+        />
       </div>
     </div>
   </div>
@@ -36,19 +48,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import moment from 'moment'
-import CheckBox from './Checkbox.vue'
-import CalendarIcon from '~/assets/icons/calendar.svg?inline'
-
-export interface Todo {
-  id: number
-  title: string
-  completed: boolean
-  endAt: Date
-}
+import { Checkbox } from './'
+import { Todo } from '~/@types'
+import { TrashIcon, EditIcon, CalendarIcon } from '~/assets/icons/index'
 
 export default Vue.extend({
   name: 'TodoListItem',
-  components: { CheckBox, CalendarIcon },
+  components: { Checkbox, CalendarIcon, EditIcon, TrashIcon },
   props: {
     todo: {
       type: Object as () => Todo,
@@ -90,6 +96,9 @@ export default Vue.extend({
   methods: {
     onChecked(checked: boolean): void {
       this.$emit('on-checked', this.todo.id, checked)
+    },
+    onAction(action: string): void {
+      this.$emit(`on-action`, this.todo.id, action)
     },
   },
 })

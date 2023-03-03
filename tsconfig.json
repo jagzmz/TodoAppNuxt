@@ -16,7 +16,7 @@
       "@/*": ["./*"]
     },
     "types": ["@nuxt/types", "@types/node"],
-    "typeRoots": ["./@types/svg-shim.d.ts"]
+    "typeRoots": ["@types/shims.d.ts"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
