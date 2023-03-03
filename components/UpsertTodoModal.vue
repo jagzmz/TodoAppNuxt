@@ -1,8 +1,13 @@
 <template>
   <div class="flex h-full w-full flex-col justify-between bg-primary p-4">
     <textarea
+      id="todo-text"
       class="h-12 w-full flex-[0.6] resize-none rounded-2xl bg-secondary p-4 text-lg font-light tracking-widest text-tertiary placeholder-tertiary placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary"
       placeholder="Whats on your mind ?"
+      :class="{
+        'outline-none ring-2 ring-red-500': isInputEmpty,
+      }"
+      @input="isInputEmpty = false"
     />
     <div class="flex justify-end gap-4">
       <Button class="border-2 border-red-500" @click="handleCancel">
@@ -31,9 +36,20 @@ export default Vue.extend({
       default: 'Cancel',
     },
   },
+  data: function () {
+    return {
+      isInputEmpty: false,
+    }
+  },
   methods: {
     handleOk() {
-      this.$emit('ok')
+      const text = (this.$el.querySelector('#todo-text') as HTMLTextAreaElement)
+        .value
+      if (!text) {
+        this.isInputEmpty = true
+        return
+      }
+      this.$emit('ok', text)
     },
     handleCancel() {
       this.$emit('cancel')

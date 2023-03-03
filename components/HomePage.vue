@@ -114,8 +114,15 @@ export default Vue.extend({
         labelCancel: 'Cancel',
       }
     },
-    handleOk() {
+    handleOk(text: string) {
       this.isModalOpen = false
+      if (!text) return
+      this.tasks.push({
+        id: this.tasks.length,
+        title: text,
+        completed: false,
+        endAt: getNthDate(0),
+      })
     },
     handleCancel() {
       this.isModalOpen = false
