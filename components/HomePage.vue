@@ -8,7 +8,7 @@
     <portal to="modal">
       <ModalTransition>
         <Backdrop v-if="isModalOpen" @escape="handleCancel">
-          <div class="container mx-auto h-60 w-[28rem]">
+          <div class="container mx-auto box-border h-[17rem] w-[29rem] p-4">
             <UpsertTodoModal
               class="rounded-2xl"
               :label-ok="modalProps.labelOk"
