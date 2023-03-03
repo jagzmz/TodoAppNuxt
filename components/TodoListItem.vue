@@ -15,7 +15,7 @@
       <div class="flex flex-col gap-3 text-sm">
         <div class="w-full text-justify text-base">
           <span
-            class="font-sans font-light tracking-widest line-clamp-2"
+            class="break-all font-sans font-light tracking-widest line-clamp-2"
             :class="todo.completed ? 'line-through' : ''"
           >
             {{ todo.title }}

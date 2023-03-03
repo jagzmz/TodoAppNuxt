@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full w-full flex-col justify-between bg-primary p-4">
     <textarea
-      id="todo-text"
+      id="td-text"
       class="h-12 w-full flex-[0.6] resize-none rounded-2xl bg-secondary p-4 text-lg font-light tracking-widest text-tertiary placeholder-tertiary placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-primary"
       placeholder="Whats on your mind ?"
       :class="{
@@ -43,8 +43,8 @@ export default Vue.extend({
   },
   methods: {
     handleOk() {
-      const text = (this.$el.querySelector('#todo-text') as HTMLTextAreaElement)
-        .value
+      const todoInputEl = this.$el.querySelector('#td-text')
+      const text = (todoInputEl as HTMLTextAreaElement).value
       if (!text) {
         this.isInputEmpty = true
         return
