@@ -39,6 +39,10 @@ const getNthDate = (n: number) => {
   return nthDay.toDate()
 }
 
+const sortByTime = (a: Todo, b: Todo) => {
+  return a.endAt.getTime() - b.endAt.getTime()
+}
+
 export default Vue.extend({
   name: 'HomePage',
   components: {
@@ -100,10 +104,10 @@ export default Vue.extend({
   },
   computed: {
     completedTasks(): Todo[] {
-      return this.tasks.filter((task) => task.completed)
+      return this.tasks.filter((task) => task.completed).sort(sortByTime)
     },
     uncompletedTasks(): Todo[] {
-      return this.tasks.filter((task) => !task.completed)
+      return this.tasks.filter((task) => !task.completed).sort(sortByTime)
     },
   },
   methods: {
@@ -126,7 +130,6 @@ export default Vue.extend({
     },
     handleCancel() {
       this.isModalOpen = false
-      console.log('cancel')
     },
   },
 })

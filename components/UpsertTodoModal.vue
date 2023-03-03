@@ -44,7 +44,7 @@ export default Vue.extend({
   methods: {
     handleOk() {
       const todoInputEl = this.$el.querySelector('#td-text')
-      const text = (todoInputEl as HTMLTextAreaElement).value
+      const text = (todoInputEl as HTMLTextAreaElement).value.trim()
       if (!text) {
         this.isInputEmpty = true
         return
