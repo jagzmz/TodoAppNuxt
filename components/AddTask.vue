@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import AddIcon from '~/assets/add.svg?inline'
+import AddIcon from '~/assets/icons/add.svg?inline'
 
 export default Vue.extend({
   name: 'AddTask',

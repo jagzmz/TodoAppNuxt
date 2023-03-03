@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import CheckMarkLogo from '~/assets/checkmark.svg?inline'
+import CheckMarkLogo from '~/assets/icons/checkmark.svg?inline'
 
 type TOnChecked = (checked: boolean) => void
 
