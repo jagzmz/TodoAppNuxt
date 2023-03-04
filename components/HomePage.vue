@@ -47,6 +47,7 @@
 import Vue from 'vue'
 import { IDelModalProps, IModalProps, Todo } from '../@types'
 
+import { TodoAction } from '../store/todos'
 import {
   Backdrop,
   DeleteTodoModal,
@@ -55,7 +56,6 @@ import {
 } from './modals'
 import { TodoList } from './todo'
 import AddTaskButton from './AddTaskButton.vue'
-import { getNthDate, sortByTime } from '~/utils/index'
 
 export default Vue.extend({
   name: 'HomePage',
@@ -75,40 +75,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      tasks: [
-        {
-          id: 0,
-          title: `Stock for the next week`,
-          completed: false,
-          endAt: getNthDate(-1),
-        },
-        {
-          id: 7,
-          title: `Finish the todo list app`,
-          completed: true,
-          endAt: getNthDate(0),
-        },
-        {
-          id: 2,
-          // long real word todo text
-          title: `Finish the essay collaboration`,
-          completed: false,
-          endAt: getNthDate(0),
-        },
-        {
-          id: 1,
-          title: `Master Tailwind CSS`,
-          completed: false,
-          endAt: getNthDate(2),
-        },
-        {
-          id: 3,
-          title: `Learn more about Nuxt.js and Vue.js about Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-           as Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.`,
-          completed: false,
-          endAt: getNthDate(5),
-        },
-      ],
       isModalOpen: false,
       modalProps: {
         labelOk: 'Add',
@@ -119,11 +85,14 @@ export default Vue.extend({
     }
   },
   computed: {
+    tasks(): Todo[] {
+      return this.$store.state.todos
+    },
     completedTasks(): Todo[] {
-      return this.tasks.filter((task) => task.completed).sort(sortByTime)
+      return this.$store.getters['todos/getCompletedTodos']
     },
     uncompletedTasks(): Todo[] {
-      return this.tasks.filter((task) => !task.completed).sort(sortByTime)
+      return this.$store.getters['todos/getUncompletedTodos']
     },
   },
   methods: {
@@ -136,23 +105,24 @@ export default Vue.extend({
       this.isModalOpen = true
     },
     handleOk(todo: Todo) {
-      debugger
       const text = todo.title
       this.isModalOpen = false
       if (!text) return
+      // FIXME: use identifier or enum for comparison
       if (this.modalProps.labelOk === 'Save') {
-        const task = this.tasks.find(
-          (task) => task.title === this.modalProps.todo?.title
-        )
-        if (task) {
-          task.title = text
-          task.endAt = todo.endAt
-          return
-        }
+        this.$store.dispatch<TodoAction>({
+          type: 'todos/update',
+          todo,
+          todoId: todo.id,
+        })
+        return
       }
-      this.tasks.push({
-        ...todo,
-        id: this.tasks.length,
+      this.$store.dispatch<TodoAction>({
+        type: 'todos/add',
+        todo: {
+          title: text,
+          endAt: todo.endAt,
+        },
       })
     },
     handleCancel() {
@@ -171,14 +141,20 @@ export default Vue.extend({
         this.modalType = 'delete'
         this.delModalProps.todo = todo
         this.isModalOpen = true
+      } else if (action === 'toggle') {
+        this.$store.dispatch<TodoAction>({
+          type: 'todos/toggle',
+          todoId: todo.id,
+        })
       }
     },
     handleDelete() {
       this.handleCancel()
       const todoToDelete = this.delModalProps.todo
-      if (!todoToDelete) return
-      this.delModalProps = {} as IDelModalProps
-      this.tasks = this.tasks.filter((task) => task.id !== todoToDelete.id)
+      this.$store.dispatch<TodoAction>({
+        type: 'todos/delete',
+        todoId: todoToDelete.id,
+      })
     },
   },
 })

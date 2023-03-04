@@ -6,8 +6,7 @@
         <li v-for="todo in todos.slice(0, maxItems)" :key="todo.id">
           <TodoListItem
             :todo="todo"
-            @on-checked="onChecked"
-            @on-action="(id, action) => $emit('on-action', todo, action)"
+            @on-action="(action) => $emit('on-action', todo, action)"
           />
         </li>
       </ul>
@@ -53,14 +52,6 @@ export default Vue.extend({
       type: Number,
       required: false,
       default: 3,
-    },
-  },
-  methods: {
-    onChecked(id: number): void {
-      const todo = this.todos.find((todo) => todo.id === id)
-      if (todo) {
-        todo.completed = !todo.completed
-      }
     },
   },
 })

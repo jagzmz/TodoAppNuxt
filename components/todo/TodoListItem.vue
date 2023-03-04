@@ -9,8 +9,8 @@
     >
       <Checkbox
         :is-checked="todo.completed"
-        :on-checked="onChecked"
         class="mt-1 flex-shrink-0"
+        @on-checked="onAction('toggle')"
       />
       <div class="flex w-full flex-col gap-3 overflow-hidden text-sm">
         <span
@@ -94,11 +94,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    onChecked(checked: boolean): void {
-      this.$emit('on-checked', this.todo.id, checked)
-    },
     onAction(action: string): void {
-      this.$emit(`on-action`, this.todo.id, action)
+      this.$emit(`on-action`, action)
     },
   },
 })
