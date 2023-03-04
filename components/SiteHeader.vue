@@ -1,10 +1,12 @@
 <template>
   <div class="p-8">
-    <h1
-      class="mx-auto w-max select-none font-Pacifico text-4xl tracking-widest text-quaternary"
+    <nuxt-link to="/"
+      ><h1
+        class="mx-auto w-max select-none font-Pacifico text-4xl tracking-widest text-quaternary"
+      >
+        {{ title }}
+      </h1></nuxt-link
     >
-      {{ title }}
-    </h1>
   </div>
 </template>
 

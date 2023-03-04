@@ -1,11 +1,9 @@
 <template>
   <div>
     <div class="flex flex-col gap-5">
-      <h1 class="ml-4 text-lg text-tertiary">
-        {{ title }} - {{ todos.length }}
-      </h1>
+      <h1 class="text-lg text-tertiary">{{ title }} - {{ todos.length }}</h1>
       <ul class="flex flex-col gap-4">
-        <li v-for="todo in todos" :key="todo.id">
+        <li v-for="todo in todos.slice(0, maxItems)" :key="todo.id">
           <TodoListItem
             :todo="todo"
             @on-checked="onChecked"
@@ -14,6 +12,17 @@
         </li>
       </ul>
     </div>
+    <nuxt-link
+      v-if="todos.length > maxItems"
+      :to="showAllUrl"
+      class="mt-2 block"
+    >
+      <span
+        class="cursor-pointer text-sm font-light tracking-widest text-tertiary underline underline-offset-4"
+      >
+        View all
+      </span>
+    </nuxt-link>
   </div>
 </template>
 
@@ -35,6 +44,15 @@ export default Vue.extend({
       type: Array as () => Todo[],
       required: true,
       default: () => [],
+    },
+    showAllUrl: {
+      type: String,
+      required: true,
+    },
+    maxItems: {
+      type: Number,
+      required: false,
+      default: 3,
     },
   },
   methods: {

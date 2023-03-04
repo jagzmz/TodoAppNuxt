@@ -6,11 +6,13 @@
     <TodoList
       title="Todo"
       :todos="uncompletedTasks"
+      :show-all-url="'/pending'"
       @on-action="handleAction"
     />
     <TodoList
       title="Completed"
       :todos="completedTasks"
+      :show-all-url="'/completed'"
       @on-action="handleAction"
     />
     <portal to="modal">
