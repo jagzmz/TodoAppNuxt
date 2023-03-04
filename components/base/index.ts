@@ -1,4 +1,5 @@
-import Button from './Button.vue'
+import ButtonBase from './ButtonBase.vue'
 import Checkbox from './Checkbox.vue'
+import DatePicker from './DatePicker.vue'
 
-export { Button, Checkbox }
+export { ButtonBase, Checkbox, DatePicker }

@@ -4,7 +4,7 @@
     @ok="$emit('ok')"
     @cancel="$emit('cancel')"
   >
-    <h1 class="text-2xl text-tertiary">Delete this Todo ?</h1>
+    <h1 class="text-center text-2xl text-tertiary">Delete this Todo ?</h1>
   </BaseModal>
 </template>
 

@@ -12,6 +12,6 @@ import Vue from 'vue'
 
 export default Vue.extend({
   // eslint-disable-next-line vue/no-reserved-component-names
-  name: 'Button',
+  name: 'ButtonBase',
 })
 </script>

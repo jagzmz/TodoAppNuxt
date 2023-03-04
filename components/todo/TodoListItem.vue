@@ -12,15 +12,13 @@
         :on-checked="onChecked"
         class="mt-1 flex-shrink-0"
       />
-      <div class="flex flex-col gap-3 text-sm">
-        <div class="w-full text-justify text-base">
-          <span
-            class="break-all font-sans font-light tracking-widest line-clamp-2"
-            :class="todo.completed ? 'line-through' : ''"
-          >
-            {{ todo.title }}
-          </span>
-        </div>
+      <div class="flex w-full flex-col gap-3 overflow-hidden text-sm">
+        <span
+          class="w-full break-words font-sans text-base font-light tracking-widest line-clamp-2"
+          :class="todo.completed ? 'line-through' : ''"
+        >
+          {{ todo.title }}
+        </span>
         <div
           class="flex select-none items-center gap-2"
           :style="{ color: colorOfDay }"
@@ -29,7 +27,9 @@
           {{ endAtText }}
         </div>
       </div>
-      <div class="flex flex-grow items-center justify-end gap-4 p-1">
+      <div
+        class="flex flex-grow flex-col items-center justify-center gap-3 sm:flex-row"
+      >
         <EditIcon
           class="cursor-pointer"
           stroke="white"

@@ -1,5 +1,5 @@
-import AddTask from './AddTask.vue'
+import AddTaskButton from './AddTaskButton.vue'
 import HomePage from './HomePage.vue'
 import SiteHeader from './SiteHeader.vue'
 
-export { AddTask, HomePage, SiteHeader }
+export { AddTaskButton, HomePage, SiteHeader }

@@ -13,6 +13,11 @@ module.exports = {
         Pacifico: ['Pacifico', 'cursive'],
         Courgette: ['Courgette', 'cursive'],
       },
+      screens: {
+        mobile: {
+          max: '640px',
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

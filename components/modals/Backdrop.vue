@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-70"
+    class="fixed top-0 left-0 z-50 flex h-full w-full items-start justify-center bg-black bg-opacity-70 sm:items-center"
     @keydown.esc="$emit('escape')"
   >
     <slot />

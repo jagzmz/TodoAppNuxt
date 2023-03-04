@@ -2,7 +2,7 @@
   <div
     class="mx-auto box-border flex max-w-4xl flex-col justify-center gap-5 p-5"
   >
-    <AddTask class="mb-5" @on-click="handleAddTask" />
+    <AddTaskButton class="mb-5" @on-click="handleAddTask" />
     <TodoList
       title="Todo"
       :todos="uncompletedTasks"
@@ -16,10 +16,7 @@
     <portal to="modal">
       <ModalTransition>
         <Backdrop v-if="isModalOpen" @escape="handleCancel">
-          <div
-            v-if="modalType === 'upsert'"
-            class="box-border h-[17rem] w-[29rem] p-4"
-          >
+          <div v-if="modalType === 'upsert'" class="box-border w-[29rem] p-4">
             <UpsertTodoModal
               class="rounded-2xl"
               :modal-props="modalProps"
@@ -29,7 +26,7 @@
           </div>
           <div
             v-if="modalType === 'delete'"
-            class="box-border h-[10rem] w-[29rem] p-4"
+            class="box-border h-[10rem] w-[25rem] p-4"
           >
             <DeleteTodoModal
               class="rounded-2xl"
@@ -46,7 +43,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import moment from 'moment'
 import { IDelModalProps, IModalProps, Todo } from '../@types'
 
 import {
@@ -56,23 +52,14 @@ import {
   UpsertTodoModal,
 } from './modals'
 import { TodoList } from './todo'
-import AddTask from './AddTask.vue'
-
-const getNthDate = (n: number) => {
-  const today = moment()
-  const nthDay = today.add(n, 'days')
-  return nthDay.toDate()
-}
-
-const sortByTime = (a: Todo, b: Todo) => {
-  return a.endAt.getTime() - b.endAt.getTime()
-}
+import AddTaskButton from './AddTaskButton.vue'
+import { getNthDate, sortByTime } from '~/utils/index'
 
 export default Vue.extend({
   name: 'HomePage',
   components: {
     TodoList,
-    AddTask,
+    AddTaskButton,
     UpsertTodoModal,
     Backdrop,
     ModalTransition,
@@ -89,7 +76,6 @@ export default Vue.extend({
       tasks: [
         {
           id: 0,
-          // long real word todo text
           title: `Stock for the next week`,
           completed: false,
           endAt: getNthDate(-1),
@@ -147,23 +133,24 @@ export default Vue.extend({
       }
       this.isModalOpen = true
     },
-    handleOk(text: string) {
+    handleOk(todo: Todo) {
+      debugger
+      const text = todo.title
       this.isModalOpen = false
       if (!text) return
       if (this.modalProps.labelOk === 'Save') {
         const task = this.tasks.find(
-          (task) => task.title === this.modalProps.initialText
+          (task) => task.title === this.modalProps.todo?.title
         )
         if (task) {
           task.title = text
+          task.endAt = todo.endAt
           return
         }
       }
       this.tasks.push({
+        ...todo,
         id: this.tasks.length,
-        title: text,
-        completed: false,
-        endAt: getNthDate(0),
       })
     },
     handleCancel() {
@@ -176,7 +163,7 @@ export default Vue.extend({
         this.modalProps = {
           labelOk: 'Save',
           labelCancel: 'Cancel',
-          initialText: todo.title,
+          todo,
         }
       } else if (action === 'delete') {
         this.modalType = 'delete'
