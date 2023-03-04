@@ -1,7 +1,7 @@
 <template>
   <div class="p-8">
     <h1
-      class="font mx-auto w-max select-none font-sans text-4xl font-normal tracking-widest text-quaternary"
+      class="mx-auto w-max select-none font-Pacifico text-4xl tracking-widest text-quaternary"
     >
       {{ title }}
     </h1>
@@ -15,7 +15,7 @@ export default Vue.extend({
   name: 'SiteHeader',
   data() {
     return {
-      title: 'Todo List',
+      title: 'Todo',
     }
   },
 })
