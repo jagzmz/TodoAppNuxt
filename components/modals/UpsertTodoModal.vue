@@ -22,6 +22,7 @@
         <DatePicker
           :value="endAtDt"
           class="sm:flex-1"
+          :min="minDate"
           @input="endAtDt = $event"
         />
       </div>
@@ -31,6 +32,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import moment from 'moment'
 import { IModalProps } from '../../@types'
 import { BaseModal } from './'
 import { DatePicker } from '~/components/base'
@@ -55,6 +57,11 @@ export default Vue.extend({
       initValue: this.modalProps.todo?.title || '',
       endAtDt: this.modalProps.todo?.endAt || new Date(),
     }
+  },
+  computed: {
+    minDate() {
+      return moment().format('YYYY-MM-DD')
+    },
   },
   mounted() {
     const todoInputEl = this.$el.querySelector(
