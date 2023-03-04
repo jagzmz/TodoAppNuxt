@@ -13,8 +13,7 @@ export default Vue.extend({
 </script>
 
 <style>
-.modal-fade-enter-active,
-.modal-fade-leave-active {
+.modal-fade-enter-active {
   transition: opacity 0.5s;
 }
 .modal-fade-enter,
