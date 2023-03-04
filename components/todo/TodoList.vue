@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-5">
       <h1 class="text-lg text-tertiary">{{ title }} - {{ todos.length }}</h1>
       <ul class="flex flex-col gap-4">
-        <li v-for="todo in todos.slice(0, maxItems)" :key="todo.id">
+        <li v-for="todo in todos.slice(0, maxItemsLength)" :key="todo.id">
           <TodoListItem
             :todo="todo"
             @on-action="(action) => $emit('on-action', todo, action)"
@@ -12,7 +12,7 @@
       </ul>
     </div>
     <nuxt-link
-      v-if="todos.length > maxItems"
+      v-if="todos.length > maxItemsLength"
       :to="showAllUrl"
       class="mt-2 block"
     >
@@ -52,6 +52,14 @@ export default Vue.extend({
       type: Number,
       required: false,
       default: 3,
+    },
+  },
+  computed: {
+    maxItemsLength() {
+      if (this.maxItems === 0) {
+        return this.todos.length
+      }
+      return this.maxItems
     },
   },
 })

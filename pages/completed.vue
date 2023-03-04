@@ -1,26 +1,13 @@
 <template>
-  <div class="min-h-screen bg-primary">
-    <SiteHeader />
-    <div
-      class="mx-auto box-border flex max-w-4xl flex-col justify-center gap-5 p-5"
-    >
-      <TodoList
-        title="Completed"
-        :todos="completedTasks"
-        @on-action="handleAction"
-      />
-      <portal-target name="modal" />
-    </div>
-  </div>
+  <index view="completed" />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { SiteHeader } from '../components'
-import { TodoList } from '../components/todo'
+import Index from './index.vue'
 
 export default Vue.extend({
-  name: 'IndexPage',
-  components: { SiteHeader, TodoList },
+  name: 'Completed',
+  components: { Index },
 })
 </script>

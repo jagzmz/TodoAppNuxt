@@ -37,18 +37,24 @@ export const state = (): Todo[] => [
   },
 ]
 
-const sortById = (a: Todo, b: Todo) => a.id - b.id
+const sortById = (way: 'asc' | 'desc') => (a: Todo, b: Todo) => {
+  if (way === 'asc') {
+    return a.id - b.id
+  } else {
+    return b.id - a.id
+  }
+}
 
 export const getters = {
   getCompletedTodos: (state: Todo[]) =>
-    state.filter((todo) => todo.completed).sort(sortById),
+    state.filter((todo) => todo.completed).sort(sortById('desc')),
   getUncompletedTodos: (state: Todo[]) =>
-    state.filter((todo) => !todo.completed).sort(sortById),
+    state.filter((todo) => !todo.completed).sort(sortById('asc')),
 }
 
 export const mutations = {
   add(state: Todo[], todo: Todo) {
-    state.push(todo)
+    state.unshift(todo)
   },
   update(state: Todo[], { todoIdx, todo }: { todoIdx: number; todo: Todo }) {
     Object.assign(state[todoIdx], todo)
@@ -71,16 +77,19 @@ export const actions = {
       completed: false,
     })
   },
-  delete({ commit }: AnyObj, { todoId }: { todoId: number }) {
-    const todoIdx = state().findIndex((todo) => todo.id === todoId)
+  delete({ commit, state }: AnyObj, { todoId }: { todoId: number }) {
+    const todoIdx = state.findIndex((todo: Todo) => todo.id === todoId)
     commit('delete', todoIdx)
   },
-  toggle({ commit }: AnyObj, { todoId }: { todoId: number }) {
-    const todoIdx = state().findIndex((todo) => todo.id === todoId)
+  toggle({ commit, state }: AnyObj, { todoId }: { todoId: number }) {
+    const todoIdx = state.findIndex((todo: Todo) => todo.id === todoId)
     commit('toggle', todoIdx)
   },
-  update({ commit }: AnyObj, { todoId, todo }: { todoId: number; todo: Todo }) {
-    const todoIdx = state().findIndex((todo) => todo.id === todoId)
+  update(
+    { commit, state }: AnyObj,
+    { todoId, todo }: { todoId: number; todo: Todo }
+  ) {
+    const todoIdx = state.findIndex((todo: Todo) => todo.id === todoId)
     commit('update', { todoIdx, todo })
   },
 }
