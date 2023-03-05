@@ -64,5 +64,8 @@
   },
   "resolutions": {
     "@nuxt/kit": "3.0.0-rc.13"
+  },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
   }
 }
