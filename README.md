@@ -2,7 +2,10 @@
   <img src='./logo_todo.svg' />
 </p>
 <p align="center">
-  A simple todo app made with Nuxt.js v2
+  A simple todo app made with Nuxt.js
+</p>
+<p align="center">
+  https://todo-app-nuxt-jagzmz.vercel.app
 </p>
 
 ## Stack
@@ -22,9 +25,6 @@
 - Mobile Responsive
 
 ## Preview
-
-https://todo-app-nuxt-jagzmz.vercel.app
-
 See [screenshots](./readme/screenshots.md)
 
 ## Build Setup
