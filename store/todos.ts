@@ -37,19 +37,19 @@ export const state = (): Todo[] => [
   },
 ]
 
-const sortById = (way: 'asc' | 'desc') => (a: Todo, b: Todo) => {
+const sortByEndAt = (way: 'asc' | 'desc') => (a: Todo, b: Todo) => {
   if (way === 'asc') {
-    return a.id - b.id
+    return a.endAt.getTime() - b.endAt.getTime()
   } else {
-    return b.id - a.id
+    return b.endAt.getTime() - a.endAt.getTime()
   }
 }
 
 export const getters = {
   getCompletedTodos: (state: Todo[]) =>
-    state.filter((todo) => todo.completed).sort(sortById('desc')),
+    state.filter((todo) => todo.completed).sort(sortByEndAt('desc')),
   getUncompletedTodos: (state: Todo[]) =>
-    state.filter((todo) => !todo.completed).sort(sortById('asc')),
+    state.filter((todo) => !todo.completed).sort(sortByEndAt('asc')),
 }
 
 export const mutations = {
@@ -92,6 +92,15 @@ export const actions = {
     const todoIdx = state.findIndex((todo: Todo) => todo.id === todoId)
     commit('update', { todoIdx, todo })
   },
+  duplicate({ commit, state }: AnyObj, { todoId }: { todoId: number }) {
+    const todoIdx = state.findIndex((todo: Todo) => todo.id === todoId)
+    const todo = state[todoIdx]
+    commit('add', {
+      ...todo,
+      id: Date.now(),
+      completed: false,
+    })
+  },
 }
 
 interface ActionTodoAdd {
@@ -113,8 +122,14 @@ interface ActionTodoUpdate {
   todo: Omit<Todo, 'id' | 'completed'>
 }
 
+interface ActionTodoDuplicate {
+  type: 'todos/duplicate'
+  todoId: number
+}
+
 export type TodoAction =
   | ActionTodoAdd
   | ActionTodoDelete
   | ActionTodoToggle
   | ActionTodoUpdate
+  | ActionTodoDuplicate

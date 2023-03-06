@@ -162,6 +162,11 @@ export default Vue.extend({
           type: 'todos/toggle',
           todoId: todo.id,
         })
+      } else if (action === 'duplicate') {
+        this.$store.dispatch<TodoAction>({
+          type: 'todos/duplicate',
+          todoId: todo.id,
+        })
       }
     },
     handleDelete() {

@@ -12,7 +12,9 @@
         class="mt-1 flex-shrink-0"
         @on-checked="onAction('toggle')"
       />
-      <div class="flex w-full flex-col gap-3 overflow-hidden text-sm">
+      <div
+        class="flex w-full flex-col justify-between gap-3 overflow-hidden text-sm"
+      >
         <span
           class="w-full break-words font-sans text-base font-light tracking-widest line-clamp-2"
           :class="todo.completed ? 'line-through' : ''"
@@ -30,6 +32,11 @@
       <div
         class="flex flex-grow flex-col items-center justify-center gap-3 sm:flex-row"
       >
+        <DuplicateIcon
+          class="cursor-pointer"
+          stroke="white"
+          @click="onAction('duplicate')"
+        />
         <EditIcon
           class="cursor-pointer"
           stroke="white"
@@ -49,12 +56,17 @@
 import Vue from 'vue'
 import moment from 'moment'
 import { Todo } from '~/@types'
-import { TrashIcon, EditIcon, CalendarIcon } from '~/assets/icons/index'
+import {
+  TrashIcon,
+  EditIcon,
+  CalendarIcon,
+  DuplicateIcon,
+} from '~/assets/icons/index'
 import { Checkbox } from '~/components/base'
 
 export default Vue.extend({
   name: 'TodoListItem',
-  components: { Checkbox, CalendarIcon, EditIcon, TrashIcon },
+  components: { Checkbox, CalendarIcon, EditIcon, TrashIcon, DuplicateIcon },
   props: {
     todo: {
       type: Object as () => Todo,
