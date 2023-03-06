@@ -25,8 +25,7 @@
 
 https://todo-app-nuxt-jagzmz.vercel.app
 
-## Screenshots
-
+See [screenshots](./readme/screenshots.md)
 
 ## Build Setup
 
