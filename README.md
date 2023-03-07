@@ -27,6 +27,9 @@
 ## Preview
 See [screenshots](./readme/screenshots.md)
 
+## Design Inspiration
+https://dribbble.com/shots/15185058-Collection-Tasks/attachments/6927323?mode=media
+
 ## Build Setup
 
 ```bash
