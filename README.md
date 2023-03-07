@@ -9,8 +9,8 @@
 </p>
 
 ## Stack
-- Nuxt.js 2
-- VueX
+- Nuxt.js 2 ( VueJS framework )
+- VueX ( State Management )
 - Tailwind.css
 - Typescript
 
