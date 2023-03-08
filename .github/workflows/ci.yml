@@ -53,3 +53,5 @@ jobs:
 
       - name: Jest coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2.2.1
+        with:
+          test-script: yarn test
