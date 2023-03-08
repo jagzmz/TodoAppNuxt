@@ -12,7 +12,11 @@
         @input="isInputEmpty = false"
         @keydown.enter="onEnter"
       />
-      <span v-if="isInputEmpty" class="text-sm text-red-500">
+      <span
+        v-if="isInputEmpty"
+        class="text-sm text-red-500"
+        data-testid="todo-input-error"
+      >
         Please enter a valid todo
       </span>
     </div>
