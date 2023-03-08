@@ -18,6 +18,7 @@
         <span
           class="w-full break-words font-sans text-base font-light tracking-widest line-clamp-2"
           :class="todo.completed ? 'line-through' : ''"
+          data-testid="todo-item-title"
         >
           {{ todo.title }}
         </span>
@@ -35,16 +36,19 @@
         <DuplicateIcon
           class="cursor-pointer"
           stroke="white"
+          data-testid="duplicate-action"
           @click="onAction('duplicate')"
         />
         <EditIcon
           class="cursor-pointer"
           stroke="white"
+          data-testid="edit-action"
           @click="onAction('edit')"
         />
         <TrashIcon
           class="cursor-pointer"
           stroke="rgb(239 68 68 / 1)"
+          data-testid="delete-action"
           @click="onAction('delete')"
         />
       </div>
@@ -107,6 +111,7 @@ export default Vue.extend({
   },
   methods: {
     onAction(action: string): void {
+      console.log('onAction', action)
       this.$emit(`on-action`, action)
     },
   },
