@@ -32,15 +32,19 @@ describe('BaseModal', () => {
   })
 
   it('renders custom button labels', () => {
+    const labelOk = 'Confirm'
+    const labelCancel = 'Abort'
     const wrapper = mount(BaseModal, {
       propsData: {
         modalProps: {
-          labelOk: 'Confirm',
-          labelCancel: 'Abort',
+          labelOk,
+          labelCancel,
         },
       },
     })
-    expect(wrapper.find('[data-testid="ok-button"]').text()).toBe('Confirm')
-    expect(wrapper.find('[data-testid="cancel-button"]').text()).toBe('Abort')
+    expect(wrapper.find('[data-testid="ok-button"]').text()).toBe(labelOk)
+    expect(wrapper.find('[data-testid="cancel-button"]').text()).toBe(
+      labelCancel
+    )
   })
 })
