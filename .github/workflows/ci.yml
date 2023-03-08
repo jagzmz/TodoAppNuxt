@@ -12,6 +12,11 @@ on:
 
 jobs:
   ci:
+    permissions:
+      checks: write
+      contents: write
+      pull-requests: write
+
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -54,4 +59,5 @@ jobs:
       - name: Jest coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2.2.1
         with:
-          test-script: yarn test
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          package-manager: yarn
