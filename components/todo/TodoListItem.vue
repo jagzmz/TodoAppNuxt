@@ -2,6 +2,7 @@
   <div
     class="h-15 box-border w-full rounded-2xl bg-secondary py-2 pl-4 pr-4"
     :class="isPastDue ? 'border-2 border-red-500' : ''"
+    :data-testid="'todo-item-' + todo.id"
   >
     <div
       class="flex flex-row gap-4 text-tertiary"

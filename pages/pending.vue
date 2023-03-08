@@ -1,5 +1,5 @@
 <template>
-  <index view="pending" />
+  <Index view="pending" />
 </template>
 
 <script lang="ts">

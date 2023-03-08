@@ -69,7 +69,7 @@ describe('TodoList', () => {
     wrapper = shallowMount(TodoList, {
       propsData: {
         ...mockProps,
-        showAllUrl: null,
+        showAllUrl: '',
         maxItems: 10,
       },
       stubs: ['nuxt-link'],

@@ -5,7 +5,8 @@
     "Nuxt",
     "Pacifico",
     "testid",
-    "todos"
+    "todos",
+    "Vuex"
   ],
   "editor.formatOnSave": true
 }
