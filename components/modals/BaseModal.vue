@@ -30,7 +30,7 @@ export default Vue.extend({
   props: {
     modalProps: {
       type: Object,
-      required: true,
+      required: false,
       default: () => ({
         labelOk: 'Ok',
         labelCancel: 'Cancel',
