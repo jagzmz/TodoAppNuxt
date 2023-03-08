@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="flex flex-col gap-5">
-      <h1 class="text-lg text-tertiary">{{ title }} - {{ todos.length }}</h1>
-      <ul class="flex flex-col gap-4">
+      <h1 class="text-lg text-tertiary" data-testid="todo-list-title">
+        {{ title }} - {{ todos.length }}
+      </h1>
+      <ul class="flex flex-col gap-4" data-testid="todo-list">
         <li v-for="todo in todos.slice(0, maxItemsLength)" :key="todo.id">
           <TodoListItem
             :todo="todo"
@@ -15,6 +17,7 @@
       v-if="todos.length > maxItemsLength"
       :to="showAllUrl"
       class="mt-2 block"
+      data-testid="todo-list-show-all"
     >
       <span
         class="cursor-pointer text-sm font-light tracking-widest text-tertiary underline underline-offset-4"
