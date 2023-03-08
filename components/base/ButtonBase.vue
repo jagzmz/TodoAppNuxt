@@ -1,5 +1,6 @@
 <template>
   <button
+    data-testid="button-base"
     class="min-w-[100px] rounded-full bg-secondary px-2 py-1 text-sm font-light tracking-widest text-tertiary focus:outline-none focus:ring-2 focus:ring-primary"
     @click="$emit('click')"
   >

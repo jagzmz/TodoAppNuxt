@@ -1,5 +1,6 @@
 declare module '*.svg?inline' {
-  const content: string
+  import Vue, { VueConstructor } from 'vue'
+  const content: VueConstructor<Vue>
   export default content
 }
 

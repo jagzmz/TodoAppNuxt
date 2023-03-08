@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex cursor-pointer select-none gap-4 rounded-xl border-2 border-[#1D1D26] p-4 text-tertiary"
+    data-testid="add-task-button"
     @click="onClick"
   >
     <div

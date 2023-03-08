@@ -1,5 +1,6 @@
 <template>
   <div
+    data-testid="checkbox"
     class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-lg border-2 border-quaternary"
     :class="isChecked ? 'bg-quaternary' : 'bg-transparent'"
     @click="$emit('on-checked')"

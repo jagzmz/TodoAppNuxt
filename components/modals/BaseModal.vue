@@ -1,16 +1,18 @@
 <template>
   <div
+    data-testid="base-modal"
     class="flex h-full w-full flex-col justify-between gap-3 bg-primary p-4 px-6"
   >
     <slot />
     <div class="mt-4 flex h-12 justify-center gap-5">
       <ButtonBase
         class="w-1/2 border-2 border-red-500 selection:bg-red-500"
+        data-testid="cancel-button"
         @click="$emit('cancel')"
       >
         {{ modalProps.labelCancel }}</ButtonBase
       >
-      <ButtonBase class="w-1/2" @click="$emit('ok')">
+      <ButtonBase class="w-1/2" data-testid="ok-button" @click="$emit('ok')">
         {{ modalProps.labelOk }}</ButtonBase
       >
     </div>

@@ -2,6 +2,7 @@
   <div class="p-8">
     <nuxt-link to="/"
       ><h1
+        data-testid="site-header-title"
         class="mx-auto w-max select-none font-Pacifico text-4xl tracking-widest text-quaternary"
       >
         {{ title }}
@@ -15,10 +16,11 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'SiteHeader',
-  data() {
-    return {
-      title: 'Todo',
-    }
+  props: {
+    title: {
+      type: String,
+      default: 'Todo',
+    },
   },
 })
 </script>

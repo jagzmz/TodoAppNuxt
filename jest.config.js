@@ -1,5 +1,6 @@
 module.exports = {
   moduleNameMapper: {
+    '^.+/(.*\\.svg)\\?inline$': '<rootDir>/assets/icons/$1',
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
     '^vue$': 'vue/dist/vue.common.js',
@@ -9,6 +10,7 @@ module.exports = {
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': 'vue-jest',
+    '^.+\\.svg$': '<rootDir>/svgTransform.js',
   },
   collectCoverage: true,
   collectCoverageFrom: [
