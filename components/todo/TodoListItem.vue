@@ -33,24 +33,15 @@
       <div
         class="flex flex-grow flex-col items-center justify-center gap-3 sm:flex-row"
       >
-        <DuplicateIcon
-          class="cursor-pointer"
-          stroke="white"
-          data-testid="duplicate-action"
-          @click="onAction('duplicate')"
-        />
-        <EditIcon
-          class="cursor-pointer"
-          stroke="white"
-          data-testid="edit-action"
-          @click="onAction('edit')"
-        />
-        <TrashIcon
-          class="cursor-pointer"
-          stroke="rgb(239 68 68 / 1)"
-          data-testid="delete-action"
-          @click="onAction('delete')"
-        />
+        <div data-testid="duplicate-action" @click="onAction('duplicate')">
+          <DuplicateIcon class="cursor-pointer" stroke="white" />
+        </div>
+        <div data-testid="edit-action" @click="onAction('edit')">
+          <EditIcon class="cursor-pointer" stroke="white" />
+        </div>
+        <div data-testid="delete-action" @click="onAction('delete')">
+          <TrashIcon class="cursor-pointer" stroke="rgb(239 68 68 / 1)" />
+        </div>
       </div>
     </div>
   </div>
@@ -111,7 +102,6 @@ export default Vue.extend({
   },
   methods: {
     onAction(action: string): void {
-      console.log('onAction', action)
       this.$emit(`on-action`, action)
     },
   },

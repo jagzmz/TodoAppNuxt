@@ -1,4 +1,11 @@
 {
-  "cSpell.words": ["checkmark", "extralight", "Nuxt", "Pacifico", "todos"],
+  "cSpell.words": [
+    "checkmark",
+    "extralight",
+    "Nuxt",
+    "Pacifico",
+    "testid",
+    "todos"
+  ],
   "editor.formatOnSave": true
 }

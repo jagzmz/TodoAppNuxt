@@ -1,4 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import { TodoListItem } from '@/components/todo'
 
 const mockTodo = {
@@ -54,16 +54,15 @@ describe('TodoListItem', () => {
     expect(duplicateAction.exists()).toBe(true)
   })
 
-  it('emits delete event when delete action is clicked', async () => {
-    wrapper = mount(TodoListItem, {
-      propsData: {
-        todo: mockTodo,
-      },
-    })
-    const deleteAction = wrapper.find(`[data-testid="${testIds.deleteAction}"]`)
-    deleteAction.trigger('click')
+  it.each([
+    ['deleteAction', 'delete'],
+    ['editAction', 'edit'],
+    ['duplicateAction', 'duplicate'],
+  ])('emits %s event when %s action is clicked', async (action, actionName) => {
+    const actionElement = wrapper.find(`[data-testid="${testIds[action]}"]`)
+    actionElement.trigger('click')
     await wrapper.vm.$nextTick()
-    expect(wrapper.emitted()['on-action']).toBeTruthy()
-    expect(wrapper.emitted()['on-action'][0]).toEqual(['delete'])
+    expect(wrapper.emitted('on-action')).toBeTruthy()
+    expect(wrapper.emitted('on-action')[0][0]).toBe(actionName)
   })
 })
