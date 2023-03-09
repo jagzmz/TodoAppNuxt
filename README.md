@@ -59,3 +59,9 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
+
+## Tests
+
+```bash
+$ yarn test
+```
