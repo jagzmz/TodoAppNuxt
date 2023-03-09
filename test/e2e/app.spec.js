@@ -4,6 +4,11 @@ import PortalVue, { Wormhole } from 'portal-vue'
 import Index from '../../pages/index.vue'
 import pendingVue from '../../pages/pending.vue'
 import completedVue from '../../pages/completed.vue'
+import {
+  mutations as _mutations,
+  actions as _actions,
+  getters as _getters,
+} from '../../store/todos'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -13,43 +18,40 @@ Wormhole.trackInstances = false
 describe('Index', () => {
   let wrapper, store, actions, getters, state, mutations
   beforeEach(() => {
-    state = {
-      todos: [
-        {
-          id: 1,
-          title: 'Todo 1',
-          completed: false,
-          endAt: new Date(),
-        },
-        {
-          id: 2,
-          title: 'Todo 2',
-          completed: true,
-          endAt: new Date(),
-        },
-      ],
-    }
+    state = [
+      {
+        id: 1,
+        title: 'Todo 1',
+        completed: false,
+        endAt: new Date(),
+      },
+      {
+        id: 2,
+        title: 'Todo 2',
+        completed: true,
+        endAt: new Date(),
+      },
+    ]
 
     getters = {
-      getCompletedTodos: (state) =>
-        state.todos.filter((todo) => todo.completed),
-      getUncompletedTodos: (state) =>
-        state.todos.filter((todo) => !todo.completed),
+      getCompletedTodos: jest.spyOn(_getters, 'getCompletedTodos'),
+      getUncompletedTodos: jest.spyOn(_getters, 'getUncompletedTodos'),
     }
 
     mutations = {
-      add: jest.fn(),
-      update: jest.fn(),
-      delete: jest.fn(),
-      toggle: jest.fn(),
+      // _mutations.add
+      add: jest.spyOn(_mutations, 'add'),
+      update: jest.spyOn(_mutations, 'update'),
+      delete: jest.spyOn(_mutations, 'delete'),
+      toggle: jest.spyOn(_mutations, 'toggle'),
     }
 
     actions = {
-      add: jest.fn(),
-      delete: jest.fn(),
-      toggle: jest.fn(),
-      update: jest.fn(),
-      duplicate: jest.fn(),
+      add: jest.spyOn(_actions, 'add'),
+      delete: jest.spyOn(_actions, 'delete'),
+      toggle: jest.spyOn(_actions, 'toggle'),
+      update: jest.spyOn(_actions, 'update'),
+      duplicate: jest.spyOn(_actions, 'duplicate'),
     }
 
     store = new Vuex.Store({
@@ -85,7 +87,7 @@ describe('Index', () => {
   })
 
   it('renders todos', () => {
-    const todoItemId = state.todos.map((todo) => `todo-item-${todo.id}`)
+    const todoItemId = state.map((todo) => `todo-item-${todo.id}`)
     todoItemId.forEach((id) => {
       const todoItem = wrapper.find(`[data-testid="${id}"]`)
       expect(todoItem.exists()).toBe(true)
@@ -124,6 +126,10 @@ describe('Index', () => {
         }),
       })
     )
+
+    // expect todo-list-title to be Todo - 2, since we added a incomplete todo
+    const todoListTitle = wrapper.find(`[data-testid="todo-list-title"]`)
+    expect(todoListTitle.text()).toBe('Todo - 2')
   })
 
   it('should delete a todo', async () => {
@@ -149,6 +155,10 @@ describe('Index', () => {
         todoId,
       })
     )
+
+    // expect todo-list-title to be Todo - 0, since we deleted a incomplete todo
+    const todoListTitle = wrapper.find(`[data-testid="todo-list-title"]`)
+    expect(todoListTitle.text()).toBe('Todo - 0')
   })
 
   it('should toggle a todo', async () => {
@@ -166,6 +176,17 @@ describe('Index', () => {
         todoId,
       })
     )
+
+    // expect todo-list-title to be Todo - 0, since we toggled a incomplete todo
+    const todoListTitle = wrapper.find(`[data-testid="todo-list-title"]`)
+    expect(todoListTitle.text()).toBe('Todo - 0')
+
+    const completedTodoList = wrapper.find(`#completed-todo-list`)
+    expect(completedTodoList.exists()).toBe(true)
+    const completedTodoListTitle = completedTodoList.find(
+      `[data-testid="todo-list-title"]`
+    )
+    expect(completedTodoListTitle.text()).toBe('Completed - 2')
   })
 
   it('should update a todo', async () => {
@@ -217,6 +238,10 @@ describe('Index', () => {
         todoId,
       })
     )
+
+    // expect todo-list-title to be Todo - 2, since we duplicated a incomplete todo
+    const todoListTitle = wrapper.find(`[data-testid="todo-list-title"]`)
+    expect(todoListTitle.text()).toBe('Todo - 2')
   })
 
   it('should render completed todos', () => {

@@ -12,11 +12,13 @@
       <TodoList
         v-if="view === 'both' || view === 'pending'"
         v-bind="pendingTodoListProps"
+        id="pending-todo-list"
         @on-action="handleAction"
       />
       <TodoList
         v-if="view === 'both' || view === 'completed'"
         v-bind="completedTodoListProps"
+        id="completed-todo-list"
         @on-action="handleAction"
       />
     </div>
