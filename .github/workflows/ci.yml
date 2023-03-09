@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@master
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v3.0.0
@@ -62,3 +65,23 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           package-manager: yarn
           output: comment, report-markdown
+          
+      - name: Jest Coverage Comment
+        if: github.ref == 'refs/heads/master'
+        id: coverageComment
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          hide-summary: true
+          coverage-summary-path: ./report.json
+
+      - name: Update README with Coverage HTML
+        if: github.ref == 'refs/heads/master'
+        run: |
+          sed -i '/<!-- Jest Coverage Comment:Begin -->/,/<!-- Jest Coverage Comment:End -->/c\<!-- Jest Coverage Comment:Begin -->\n\${{ steps.coverageComment.outputs.summaryHtml }}\n<!-- Jest Coverage Comment:End -->' ./README.md
+
+      - name: Commit & Push changes in README
+        if: github.ref == 'refs/heads/master'
+        uses: actions-js/push@master
+        with:
+          message: Update coverage in README
+          github_token: ${{ secrets.GITHUB_TOKEN }}
