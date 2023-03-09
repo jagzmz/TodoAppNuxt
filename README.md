@@ -69,4 +69,4 @@ $ yarn test
 ## Test Coverage
 
 <!-- Jest Coverage Comment:Begin -->
-<!-- Jest Coverage Comment:End -->
+\n<!-- Jest Coverage Comment:End -->
