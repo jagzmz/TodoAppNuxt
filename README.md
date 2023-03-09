@@ -65,3 +65,8 @@ $ yarn generate
 ```bash
 $ yarn test
 ```
+
+## Test Coverage
+
+<!-- Jest Coverage Comment:Begin -->
+<!-- Jest Coverage Comment:End -->
