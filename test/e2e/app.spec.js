@@ -1,6 +1,6 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import PortalVue from 'portal-vue'
+import PortalVue, { Wormhole } from 'portal-vue'
 import Index from '../../pages/index.vue'
 import pendingVue from '../../pages/pending.vue'
 import completedVue from '../../pages/completed.vue'
@@ -8,6 +8,7 @@ import completedVue from '../../pages/completed.vue'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(PortalVue)
+Wormhole.trackInstances = false
 
 describe('Index', () => {
   let wrapper, store, actions, getters, state, mutations
