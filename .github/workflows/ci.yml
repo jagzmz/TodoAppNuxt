@@ -65,7 +65,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           package-manager: yarn
           output: comment, report-markdown
-          
+
       - name: Jest Coverage Comment
         if: github.ref == 'refs/heads/master'
         id: coverageComment
