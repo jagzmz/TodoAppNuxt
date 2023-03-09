@@ -75,5 +75,5 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: actions-js/push@master
         with:
-          message: "test(coverage): Update coverage in README"
+          message: 'test(coverage): Update coverage in README'
           github_token: ${{ secrets.GITHUB_TOKEN }}
